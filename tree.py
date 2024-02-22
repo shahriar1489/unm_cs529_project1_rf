@@ -212,6 +212,6 @@ class ID3:
     
     def entropy(): 
         
-        return None 
+        return -1
      
         
