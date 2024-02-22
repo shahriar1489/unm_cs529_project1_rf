@@ -1,1 +1,1 @@
-Implementation of Random Forest Algoirthm from Scratch
+Implementation of Random Forest Algorithm from Scratch
