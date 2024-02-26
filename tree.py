@@ -15,6 +15,29 @@ import os
 import time 
 
 
+import sys
+
+# Arithmetic 
+from fractions import Fraction
+from decimal import Decimal
+
+
+
+"""
+
+- Along the pipeline, keep the dataframe as pandas for as long as possible. 
+
+- 
+
+- 
+
+- 
+
+"""
+
+
+
+
 
 class ID3: 
     
@@ -214,4 +237,77 @@ class ID3:
         
         return -1
      
+        
+    def compute_impurity_by_label(attribute, impurity='gini'): # Impurity of the total dataset : DONE
+        
+        """
+        FEATURES: 
+        
+        attribute : pandas df
+            the column whose entropy is to be calculated
+        
+        impurity : string 
+            the impurity measure used- gini or entropty 
+        
+        
+        Returns 
+            np real scalar number 
+        """
+        
+    
+        # get the total number of instances/rows in the dataset
+        N = attribute.shape[0]
+        
+        print('\t\t Number of rows in attribute param:', N)
+        #sys.exit(0)
+    
+        # get the count
+        label_values, label_counts = np.unique(attribute, return_counts=True)
+        label_fractions = []
+    
+    
+        # get the fractions for the each of the labels- better to use loop be cause there can be more than two labels
+    
+        for count in label_counts :
+            print(Decimal(count/N)) 
+            
+            result_float = float( count/ Decimal(N) )
+            
+            label_fractions.append( result_float  )
+    
+    
+        print('\t\tlabel_fractions: ',label_fractions)
+        
+        label_fractions = np.array( label_fractions )
+        print('\t\tDifferent label values collected: ', label_values)
+        print('\t\tDifferent label counts colleceted: ', label_counts)
+        print('\t\tFractions of different labels: ', label_fractions)
+    
+    
+        # write a subroutine for entropy
+        if impurity=='entropy':
+            #return  - np.sum ( label_fractions * np.log2(  label_fractions ) ) # This returns the complete entropy 
+            print('-------------\n\n\n')
+            #print("\t\t\tInside impurity=entropy",  -1 * label_fractions * np.log2(label_fractions) ) 
+    
+            print("-------------\t\t\tnp.sum = ", -np.sum(  label_fractions * np.log2(label_fractions) ) )
+            
+            
+            return -np.sum(  label_fractions * np.log2(label_fractions) )
+            
+            
+            
+            
+    
+        # write a subroutine for gini
+        elif impurity=='gini':  
+    
+          return 1 - np.sum(  np.square( label_fractions )   ) # 1 - sum of elementwise fraction #This returns the complete gini
+    
+    
+        else :
+    
+            print("ERROR: impurity metric can be either of gini or entropy.")
+            return -1 
+        
         
