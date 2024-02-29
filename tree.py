@@ -36,9 +36,6 @@ from decimal import Decimal
 """
 
 
-
-
-
 class ID3: 
     
     def __init__(self, df, attributes):
@@ -107,8 +104,6 @@ class ID3:
             There needs to be a methods to decide if the attribute is discrete or continuous.
             For now, assume all are discrete. 
             """
-            
-            
             
             info_gain = self.information_gain( examples[a], target_attribute, 'entropy') # examples is pd df
                     
@@ -185,7 +180,7 @@ class ID3:
         
         
         
-    def information_gain(self, examples, target_attribute, attribute, impurity='gini'): 
+    def information_gain( examples, target_attribute, attribute, impurity='gini'): 
         """
 
         Parameters
@@ -214,35 +209,7 @@ class ID3:
         
         
        
-    def information_gain_for_discrete_attribute(self, examples_a, target_attribute, impurity='entropy'): # 02/28/2024 This stays. Fix this 
-        """
 
-        Parameters
-        ----------
-        
-        target_attribute : attribute whose value is to be predicted by tree 
-        
-        impurity_measure : gini/entropy 
-
-        Returns
-        -------
-        scalar real number  
-            
-        
-        
-        self.information_gain( examples[a], target_attribute, 'entropy') # examples is pd df
-
-        """
-        
-        impurity_for_target_attribute =
-        
-        
-        
-        
-    
-        
-        return None # returns a scalar real number     
-        
     
     
     def gini(): 
@@ -254,7 +221,7 @@ class ID3:
         return -1
      
         
-    def compute_impurity_for_discrete_attribute(attribute, impurity='gini'): # Impurity of the total dataset : DONE
+    def compute_impurity_by_label(self, attribute, impurity='gini'): # Impurity of the total dataset : DONE
         
         """
         FEATURES: 
@@ -327,3 +294,81 @@ class ID3:
             return -1 
         
         
+    def information_gain_for_discrete_attribute(self, examples_a, target_attribute, impurity='entropy'): # 02/28/2024 This stays. Fix this 
+        """
+
+        Parameters
+        ----------
+        examples_a : the attribute column whose feature is to be calculated 
+            type: Pandas Series 
+            
+        target_attribute : attribute whose value is to be predicted by tree 
+            type: Pandas Series  
+        
+        attribute : attribute/column name for examples_a
+            type: string
+        
+        impurity_measure : gini/entropy 
+            type: string
+
+        Returns
+        -------
+        scalar real number  
+            
+        
+        
+        self.information_gain( examples[a], target_attribute, 'entropy') # examples is pd df
+
+        """
+        
+        #impurity_for_target_attribute = self.compute_impurity_for_discrete_attribute(target_attribute, impurity=impurity)
+        
+        
+        # get the unique values in examples_a
+        examples_a_values = np.unique(examples_a)
+        
+        N = examples_a.shape[0]
+        
+        result = self.compute_impurity_by_label(  target_attribute=target_attribute , impurity=impurity)
+        
+        print( '\t\t\tresult after initialization : ', result) # ok 
+        
+        #sys.exit(0)
+        for a in examples_a_values: 
+            
+            # get the subset of examples_a and corresponding tuple in target_attribute
+            #examples_a[attribute]
+            #print( examples_a[examples_a==a])
+            #print('-----')
+            #print('feature subset shape:\n', examples_a[examples_a==a].shape)
+            #print('-----')
+            
+            #print( 'target subset shape:\n', target_attribute[examples_a==a].shape )
+        
+            
+            #examples_a_subset = np.array( examples_a[examples_a==a] ) 
+            """
+            I don't need the line above rn
+            """
+            
+            
+            #target_a_subset = np.array( target_attribute[examples_a==a] ) # converting to np for faster computation
+            
+            n = target_attribute[examples_a==a].shape[0]
+            #compute_impurity_by_label(  np.array( target_attribute[examples_a==a] ), impurity=impurity)
+            
+            
+            prob_float = float( n/ Decimal(N) )
+            
+            
+            impurity_a = self.compute_impurity_by_label( target_attribute[examples_a==a] , impurity=impurity) * prob_float
+            
+            result = result - impurity_a
+            
+            print('\t\t---------------\t\t\n')
+            
+            
+            
+            print('\t\t\t--- final info gain : ', result )
+            
+        return result # returns a scalar real number         
