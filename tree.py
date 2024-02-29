@@ -103,7 +103,14 @@ class ID3:
         
         for a in attributes: # find the attribute with the highest information gain 
             
-            info_gain = self.information_gain( examples[A], target_attribute, 'gini') # examples is pd df
+            """
+            There needs to be a methods to decide if the attribute is discrete or continuous.
+            For now, assume all are discrete. 
+            """
+            
+            
+            
+            info_gain = self.information_gain( examples[a], target_attribute, 'entropy') # examples is pd df
                     
             
             if info_gain > highest_info_gain: 
@@ -178,13 +185,13 @@ class ID3:
         
         
         
-    def information_gain(self, examples , target_attribute, attribute, impurity='gini'): 
+    def information_gain(self, examples, target_attribute, attribute, impurity='gini'): 
         """
 
         Parameters
         ----------
         examples : numpy array 
-            the feature set - X
+            the feature columns whose information gain is to be calculated 
             
         target_attribute : numpy array 
             the target label - y
@@ -207,11 +214,12 @@ class ID3:
         
         
        
-    def information_gain_by_target_attribute(self, target_attribute, impurity_measure):
+    def information_gain_for_discrete_attribute(self, examples_a, target_attribute, impurity='entropy'): # 02/28/2024 This stays. Fix this 
         """
 
         Parameters
         ----------
+        
         target_attribute : attribute whose value is to be predicted by tree 
         
         impurity_measure : gini/entropy 
@@ -220,10 +228,18 @@ class ID3:
         -------
         scalar real number  
             
+        
+        
+        self.information_gain( examples[a], target_attribute, 'entropy') # examples is pd df
 
         """
         
+        impurity_for_target_attribute =
         
+        
+        
+        
+    
         
         return None # returns a scalar real number     
         
@@ -238,7 +254,7 @@ class ID3:
         return -1
      
         
-    def compute_impurity_by_label(attribute, impurity='gini'): # Impurity of the total dataset : DONE
+    def compute_impurity_for_discrete_attribute(attribute, impurity='gini'): # Impurity of the total dataset : DONE
         
         """
         FEATURES: 
