@@ -372,3 +372,7 @@ class ID3:
             print('\t\t\t--- final info gain : ', result )
             
         return result # returns a scalar real number         
+    
+    
+
+
