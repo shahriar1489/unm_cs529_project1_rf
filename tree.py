@@ -206,20 +206,9 @@ class ID3:
         return -1 
         
             
-        
-        
-       
-
     
     
-    def gini(): 
-        
-        return None
-    
-    def entropy(): 
-        
-        return -1
-     
+      
         
     def compute_impurity_by_label(self, attribute, impurity='gini'): # Impurity of the total dataset : DONE
         
